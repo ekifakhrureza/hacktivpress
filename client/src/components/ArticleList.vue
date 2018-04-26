@@ -1,16 +1,18 @@
 <template>
 	<div class="container">
 		<div v-if="getToken!==null">		
-		  <button class="float-left btn btn-outline-success ml-2" data-toggle="modal" data-target="#AddArticle">
-				<i class="far fa-plus-square"> Add Article</i>
-			</button>
+
 		</div>
 		<h2 class="text-center">Article List</h2>
+				<button v-if="getToken!==null" class="float-left btn btn-outline-success ml-2" data-toggle="modal" data-target="#AddArticle">
+				<i class="far fa-plus-square"> Add Article</i>
+			</button>
 		<div class="card">
 			<div class="card-body">
 				<div class="row" v-for="(getArticle,index) in getArticle" :key="index">
 					<div class="col-md-2">
 						<p class="text-secondary text-center">Author : {{ getArticle.author.name }}</p>
+						<p class="text-secondary text-center">Category : {{ getArticle.category }}</p>
 					</div>
 					<div class="col-md-10">
 						<p style="color:#007bff">
@@ -18,6 +20,7 @@
 						</p>
 						<div class="clearfix"></div>
 						<p>{{ getArticle.content }}</p>
+						
 					</div>
 				</div>
 			</div>
@@ -27,7 +30,7 @@
 </template>
 
 <script>
-	// import AddArticle from './AddArticle'
+	import AddArticle from './AddArticle'
 	import {
 		mapActions,
 		mapGetters,
@@ -37,7 +40,7 @@
 	export default {
 		name: 'ArticleList',
 		components : {
-			// AddArticle
+			AddArticle
 		},
 		methods: {
 			...mapActions(['getAllArticle', 'getDetailArticle']),

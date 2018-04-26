@@ -5,7 +5,7 @@ import axios from 'axios'
 Vue.use(Vuex)
 const instance = axios.create({
   baseURL: 'http://localhost:3000',
-    // headers: { 'token': localStorage.getItem('token') }
+  // headers: { 'token': localStorage.getItem('token') }
 })
 export default new Vuex.Store({
   state: {
@@ -55,7 +55,7 @@ export default new Vuex.Store({
     },
     getDetailArticle({ commit }, payload) {
       axios
-        .get(`http://localhost:3000/questions/${payload}`, {})
+        .get(`http://localhost:3000/articles/${payload}`, {})
         .then(response => {
           commit('setArticle', response.data.data)
         })
@@ -67,10 +67,13 @@ export default new Vuex.Store({
       instance
         .post('/articles/add', {
           title: payload.title,
-          content: payload.content
+          content: payload.content,
+          category: payload.category
+        },{
+          headers: { 'token': localStorage.getItem('token') }
         })
         .then(response => {
-          context.dispatch('getAllQuestion')
+          context.dispatch('getAllArticle')
         })
         .catch(err => {
           console.log(err)

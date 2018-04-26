@@ -12,6 +12,7 @@ module.exports = {
             username: username,
         }).then(data => {
             if (data) {
+                var result = bcrypt.compareSync(password, data.password);
                 res.status(202).json({
                     message: 'Username Already Exist'
                 })
@@ -24,12 +25,19 @@ module.exports = {
 
                 })
                 newUser.save()
+                
                     .then(response => {
+                        let payload = {
+                            id: response._id,
+                            email: response.email,
+                            name: response.name,
+                          }
                         console.log('sukses');
-
+                        let token = jwt.sign(payload, process.env.SECRETKEY)
                         res.status(200).json({
                             message: 'query register user success',
-                            data: response
+                            data: response,
+                            token: token,
                         })
                     }).catch(err => {
                         console.log(err);
@@ -39,6 +47,8 @@ module.exports = {
                     })
             }
         }).catch(err => {
+            console.log('masuk error');
+            
             console.log(err);
 
         })
