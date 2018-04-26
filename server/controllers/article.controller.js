@@ -33,28 +33,25 @@ module.exports = {
     },
 
     add(req, res) {
-        console.log('asuippp serverrrr'+req.body.title);
-        
+        console.log('masuk kenapaa'+req.body.title);
         let title = req.body.title
         let content = req.body.content
         let category = req.body.category
-        let userId = req.decoded.id
         let newArticle = new Article({
             title: title,
             content: content,
             category: category,
-            userId: userId
         })
-
         newArticle.save().then(response => {
             res.status(200).json({
                 message: 'query add article success',
                 data: response
             })
         }).catch(err => {
+            console.log(err);
+            
             message: 'query add article failed',
                 err
-
         })
     },
 
