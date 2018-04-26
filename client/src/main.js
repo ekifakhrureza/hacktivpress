@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import '@/assets/css/style.css'
+import '@/assets/js/sidebar.js'
 
 Vue.config.productionTip = false
 

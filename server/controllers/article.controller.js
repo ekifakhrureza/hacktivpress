@@ -5,6 +5,7 @@ module.exports = {
     getAll (req, res) {
         Article.find()
             .sort([['createdAt', -1]])
+            .populate('author')
             .exec()
             .then(response => {
                 res.status(200).json({
@@ -33,7 +34,9 @@ module.exports = {
     },
 
     getByCat (req, res) {
-        Article.findById(req.params.category).exec().then(response => {
+        Article.find({
+            category: req.params.category,
+        }).exec().then(response => {
             res.status(200).json({
                 message: 'success get data by category',
                 data: response
@@ -47,7 +50,9 @@ module.exports = {
     },
 
     getByAuthor (req, res) {
-        Article.findById(req.params.author).exec().then(response => {
+        Article.findById({
+            author: req.params.author,
+        }).exec().then(response => {
             res.status(200).json({
                 message: 'success get data by userid',
                 data: response
