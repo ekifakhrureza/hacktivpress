@@ -14,7 +14,7 @@ let articleSchema = new mongoose.Schema({
         type: String,
         required: [true, 'category cannot be empty']
     },
-    userId: {
+    author: {
         type: Schema.Types.ObjectId,
         ref: "User"
     },

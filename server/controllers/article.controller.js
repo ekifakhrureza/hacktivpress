@@ -32,15 +32,44 @@ module.exports = {
         })
     },
 
+    getByCat (req, res) {
+        Article.findById(req.params.category).exec().then(response => {
+            res.status(200).json({
+                message: 'success get data by category',
+                data: response
+            })
+        }).catch(err => {
+            res.status(500).json({
+                message: 'get data by id failed',
+                err
+            })
+        })
+    },
+
+    getByAuthor (req, res) {
+        Article.findById(req.params.author).exec().then(response => {
+            res.status(200).json({
+                message: 'success get data by userid',
+                data: response
+            })
+        }).catch(err => {
+            res.status(500).json({
+                message: 'get data by id failed',
+                err
+            })
+        })
+    },
+
     add(req, res) {
-        console.log('masuk kenapaa'+req.body.title);
         let title = req.body.title
         let content = req.body.content
         let category = req.body.category
+        let author  = req.decoded.id
         let newArticle = new Article({
             title: title,
             content: content,
             category: category,
+            author: author
         })
         newArticle.save().then(response => {
             res.status(200).json({
@@ -60,10 +89,9 @@ module.exports = {
         let title = req.body.title
         let content = req.body.content
         let category = req.body.category
-        let userId = req.decoded.id
 
         Article.update({ _id: id }, {
-            $set: { title: title, content: content, category: category, userId:userId},
+            $set: { title: title, content: content, category: category},
 
         }).then(response => {
             res.status(200).json({
